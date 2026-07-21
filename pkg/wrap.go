@@ -1,6 +1,10 @@
+//go:build js
+
 package wrap
 
 import (
+	_ "github.com/insensatestone/sqlite-driver-wasm/pkg/driver/sqlite3"
+
 	"context"
 	"database/sql"
 	"errors"
@@ -25,12 +29,24 @@ type TxWrap struct {
 
 var ctx_key_tx = struct{ name string }{name: "tx"}
 
-func NewDBWrap(db *sql.DB) *DBWrap {
+func NewDBWrapWithDB(db *sql.DB) *DBWrap {
 	// conn, _ := db.Conn(context.Background())
 	return &DBWrap{
 		db: db,
 		// conn: conn,
 	}
+}
+
+func NewDBWrap(path string) (*DBWrap, error) {
+	// conn, _ := db.Conn(context.Background())
+	db, err := sql.Open("sqlite3_wasm", path)
+	if err != nil {
+		return nil, err
+	}
+	return &DBWrap{
+		db: db,
+		// conn: conn,
+	}, nil
 }
 
 func (dbw *DBWrap) Begin() (context.Context, error) {
