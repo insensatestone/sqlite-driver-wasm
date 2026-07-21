@@ -1,6 +1,6 @@
 //go:build js
 
-package sqlite
+package sqlite3
 
 import (
 	"database/sql"
