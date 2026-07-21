@@ -7,7 +7,7 @@ golang sql driver for sqlite wasm
 ```golang
 
 import(
-	_ "gdream/internal/driver/sqlite"
+	_ "github.com/insensatestone/sqlite-driver-wasm/pkg/driver/sqlite3"
 )
 
 func main() {
